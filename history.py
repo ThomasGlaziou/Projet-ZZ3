@@ -59,7 +59,6 @@ class History(object):
     def redo(self):
         """ """
         val = None
-        print(self.last.next)
         if not self.isEmpty() and self.last.next is not None:
             self.last = self.last.next
             val = copy.deepcopy(self.last.value)

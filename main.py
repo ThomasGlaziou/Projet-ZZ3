@@ -12,7 +12,7 @@ import os
 import time
 
 from history import History
-from image_label import ImageLabel
+from image_canvas import ImageCanvas
 from file import File
 from edit import Edit
 from mark import Mark
@@ -118,21 +118,21 @@ class WaterMark(Tk):
         self.edge_image= Frame(self.picture_frame, bg='#A39F9F', padx=2, pady=2)
         self.edge_image.pack(side=TOP, padx=2, pady=2)
 
-        self.image_label = ImageLabel(self.edge_image, cursor='pencil', bd=0)
-        self.image_label.pack(side=TOP)
-
-        self.image_label.initialize()
+        self.image_canvas = ImageCanvas(self.edge_image, cursor='pencil', bd=0)
+        self.image_canvas.pack(side=TOP)
+        
+        self.image_canvas.initialize()
 
         #=====================================================================================================================
         
 
-        self.file = File(self.root, self.image_label)
+        self.file = File(self.root, self.image_canvas)
         self.file.display_widget(self.option_frame, self.color_style_1, self.color_style_2, self.active_color)
 
-        self.edit = Edit(self.root, self.image_label)
+        self.edit = Edit(self.root, self.image_canvas)
         self.edit.display_widget(self.option_frame, self.color_style_1, self.color_style_2, self.active_color)
 
-        self.mark = Mark(self.root, self.image_label)
+        self.mark = Mark(self.root, self.image_canvas)
         self.mark.display_widget(self.option_frame, self.color_style_1, self.color_style_2, self.active_color)
 
 

@@ -30,6 +30,7 @@ class Edit(Interface):
 
         # object of the interest
         self.obj = obj
+        
 
         self.image_dict = self.create_icon(dict(undo="image/undo.jpg", redo="image/redo.jpg"))
         
