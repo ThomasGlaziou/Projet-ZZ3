@@ -1,0 +1,2 @@
+function var float : atan_fun(var float: x) =
+(1)*x/1+(-1)*x*x*x/3+(1)*x*x*x*x*x/5+(-1)*x*x*x*x*x*x*x/7+(1)*x*x*x*x*x*x*x*x*x/9+(-1)*x*x*x*x*x*x*x*x*x*x*x/11+(1)*x*x*x*x*x*x*x*x*x*x*x*x*x/13+(-1)*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x/15+(1)*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x/17+(-1)*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x/19;

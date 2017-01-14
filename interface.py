@@ -1,5 +1,6 @@
 
 from PIL import Image, ImageTk
+from tkinter import Tk, TclError, Toplevel
 
 from abc import ABCMeta
 from abc import abstractmethod
@@ -7,6 +8,7 @@ from abc import abstractmethod
 class Interface(object):
 
     __metaclass__ = ABCMeta
+    fen = None
 
     @abstractmethod
     def display_widgets(self, master, color_style_1=None,
@@ -26,3 +28,18 @@ class Interface(object):
             image_dict[key] = ImageTk.PhotoImage(img)
 
         return image_dict
+
+    def create_fen(self):
+        if self.fen is not None:
+            try:
+                self.destroy_fen()
+            except TclError:
+                self.fen = None
+        self.fen = Toplevel() # creating window
+
+        return self.fen
+
+    def destroy_fen(self):
+        self.fen.destroy()
+        self.fen = None
+        

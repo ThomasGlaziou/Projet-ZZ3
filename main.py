@@ -15,15 +15,14 @@ from history import History
 from image_canvas import ImageCanvas
 from file import File
 from edit import Edit
-from mark import Mark
-
+from attack import Attack
+from image_canvas import CanvasSelection
 
 
 class WaterMark(Tk):
     
     def __init__(self):
         """ initialize """
-
         # define the root
         self.root = Tk()
 
@@ -38,26 +37,16 @@ class WaterMark(Tk):
         # font style
         # self.fontLegende ='Arial 10 bold'
 
-        self.img = None
-
-        # initialize the picures dict used in widgets
-        self.image_dict= None
-
-
-        # pictures's name
-        self.filename = None
-
         # size of the window
         self.L=self.fen.winfo_screenwidth()
         self.H=self.fen.winfo_screenheight()
+
 
         self.display()
 
         # loop
         self.root.mainloop()
-
-
-
+        
 
     def display_menu(self):
         """ display the main menu """
@@ -71,7 +60,7 @@ class WaterMark(Tk):
         edit_menu = self.edit.display_menu(main_menu)
 
         # create the mark menu
-        mark_menu = self.mark.display_menu(main_menu)
+        attack_menu = self.attack.display_menu(main_menu)
 
         # create the help menu
         help_menu = Menu(main_menu)
@@ -82,7 +71,7 @@ class WaterMark(Tk):
         # pack menus on the main menu
         main_menu.add_cascade(label = "File", menu=file_menu)
         main_menu.add_cascade(label = "Edit", menu=edit_menu)
-        main_menu.add_cascade(label = "Mark", menu=mark_menu)
+        main_menu.add_cascade(label = "Attack", menu=attack_menu)
         main_menu.add_cascade(label = "Help", menu=help_menu)
 
         
@@ -115,10 +104,36 @@ class WaterMark(Tk):
         self.picture_frame= Frame(self.fen, bg='grey')
         self.picture_frame.pack(side=TOP, fill= BOTH , expand=YES)
 
-        self.edge_image= Frame(self.picture_frame, bg='#A39F9F', padx=2, pady=2)
-        self.edge_image.pack(side=TOP, padx=2, pady=2)
+
+        self.pos_frame = Frame(self.picture_frame, bg='grey')
+        self.pos_frame.pack(side=LEFT, fill= BOTH , expand=YES)
+        self.edge_image= Frame(self.pos_frame, bg='#A39F9F', padx=2, pady=2)
+        self.edge_image.grid(sticky=NW)
+        #self.edge_image.pack(fill=BOTH, expand=YES)
+
+        #self.scrollbar = Scrollbar(self.edge_image, orient=VERTICAL, relief=RAISED)
+
+        # self.scrollbar.pack(side=RIGHT, fill=Y)
+
+        # self.scrollbar.pack_forget()
 
         self.image_canvas = ImageCanvas(self.edge_image, cursor='pencil', bd=0)
+
+        self.Yscroll = Scrollbar(self.edge_image, orient=VERTICAL)
+        self.Xscroll = Scrollbar(self.edge_image, orient=HORIZONTAL)
+        
+
+        self.Yscroll['command'] = lambda x, y: self.image_canvas.set_Yscroll(self.Yscroll.get(), x, y)
+        self.Xscroll['command'] = lambda x, y: self.image_canvas.set_Xscroll(self.Xscroll.get(), x, y)
+
+        # print(help(self.Yscroll))
+
+        self.Yscroll.pack(side=RIGHT,fill=Y)
+        self.Xscroll.pack(side=BOTTOM,fill=X)
+        
+        self.image_canvas.config(xscrollcommand=self.Xscroll.set,
+                                 yscrollcommand=self.Yscroll.set)
+
         self.image_canvas.pack(side=TOP)
         
         self.image_canvas.initialize()
@@ -132,8 +147,8 @@ class WaterMark(Tk):
         self.edit = Edit(self.root, self.image_canvas)
         self.edit.display_widget(self.option_frame, self.color_style_1, self.color_style_2, self.active_color)
 
-        self.mark = Mark(self.root, self.image_canvas)
-        self.mark.display_widget(self.option_frame, self.color_style_1, self.color_style_2, self.active_color)
+        self.attack = Attack(self.root, self.image_canvas,)
+        self.attack.display_widget(self.option_frame, self.picture_frame, self.color_style_1, self.color_style_2, self.active_color)
 
 
     def display(self):

@@ -41,13 +41,9 @@ class File(Interface):
 
         # if user has not selected file
         if filename :
-            try:
-                img=Image.open(filename)
-                self.obj.update(img)
+            img=Image.open(filename)
+            self.obj.update(img)
 
-            except:
-                err = True
-                showerror("Error", "The file cannot be open")
 
         return err, filename
         
@@ -70,6 +66,8 @@ class File(Interface):
 
     def save_as_file(self):
         """ save the picture in gaving its name """
+
+        print(self.filepath)
         
         filename = filedialog.asksaveasfilename(filetypes=[('all files','.*')],initialdir=self.filepath, title="Save")
         filepath = None
